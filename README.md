@@ -1,6 +1,6 @@
 # 🎬 IMDB Sentiment Analysis
 
-A complete end-to-end machine learning project for sentiment analysis of IMDB movie reviews, featuring a full data pipeline with DVC, a trained Logistic Regression model, and a web application built with FastAPI and Streamlit.
+A complete end-to-end machine learning project for sentiment analysis of IMDB movie reviews, featuring a full data pipeline, a trained Logistic Regression model, and a web application built with FastAPI and Streamlit.
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.53-red.svg)](https://streamlit.io/)
@@ -28,13 +28,12 @@ This project implements a sentiment analysis system for IMDB movie reviews using
 - 📊 **50,000** IMDB reviews dataset
 - 🎯 **88.98%** accuracy
 - 🚀 **Production-ready** API and web interface
-- 📦 **DVC pipeline** for reproducible ML workflows
+- 📦 **Modular pipeline** for reproducible ML workflows
 - 🧪 Comprehensive text preprocessing and feature engineering
 
 ## ✨ Features
 
 - **Complete ML Pipeline**: Data ingestion → Processing → Feature Engineering → Model Training → Evaluation
-- **DVC Integration**: Reproducible data and model versioning
 - **REST API**: FastAPI backend for predictions
 - **Web Interface**: Beautiful Streamlit UI for easy interaction
 - **Real-time Predictions**: Instant sentiment analysis with confidence scores
@@ -63,9 +62,10 @@ FN: 374   |  TP: 3626
 IMBD project/
 ├── data/
 │   ├── raw/              # Raw train/test data (DVC tracked)
+│   ├── processed/        # Cleaned and preproc
 │   ├── processed/        # Cleaned and preprocessed data
 │   └── feature/          # TF-IDF features and vectorizer
-├── models/               # Trained models (DVC tracked)
+├── models/               # Trained models
 │   └── logistic_regression_model.pkl
 ├── results/              # Evaluation metrics (JSON)
 ├── src/
@@ -78,8 +78,6 @@ IMBD project/
 │   └── experiment.ipynb        # Jupyter notebook experiments
 ├── api.py                # FastAPI backend
 ├── app.py                # Streamlit frontend
-├── dvc.yaml              # DVC pipeline definition
-├── requirements.txt      # Python dependencies
 ├── start_api.bat         # Windows script to start API
 ├── start_streamlit.bat   # Windows script to start web app
 └── README.md
@@ -92,7 +90,6 @@ IMBD project/
 - Git
 - DVC (optional, for pipeline reproduction)
 
-### Setup
 
 1. **Clone the repository**
 ```bash
@@ -176,24 +173,26 @@ python src/model_evaluation.py
 
 The project uses **DVC** for pipeline management. To reproduce the entire pipeline:
 
-1. **Install DVC** (if not already installed):
+1o reproduce the entire ML pipeline, run the scripts in order:
+
 ```bash
-pip install dvc
+# Activate environment
+.\env\Scripts\activate
+
+# Run pipeline steps in sequence
+python src/data_ingestion.py      # Load and split IMDB dataset
+python src/data_processing.py     # Clean and preprocess text
+python src/feature_engineering.py # Extract TF-IDF features
+python src/model_building.py      # Train Logistic Regression model
+python src/model_evaluation.py    # Evaluate and save metrics
 ```
 
-2. **Run the pipeline**:
-```bash
-dvc repro
-```
-
-This will execute all stages:
-- `data_ingestion`: Load and split IMDB dataset
-- `data_processing`: Clean and preprocess text
-- `feature_engineering`: Extract TF-IDF features
-- `model_building`: Train Logistic Regression model
-- `model_evaluation`: Evaluate and save metrics
-
-## 🌐 Web Application
+Each stage:
+- `data_ingestion`: Loads raw data and splits into train/test sets
+- `data_processing`: Cleans text (HTML removal, stopwords, lemmatization)
+- `feature_engineering`: Converts text to TF-IDF vectors
+- `model_building`: Trains the model and saves as pickle
+- `model_evaluation`: Evaluates performance and saves metrics as JSON
 
 ### API Endpoints
 
@@ -251,8 +250,7 @@ FastAPI provides automatic interactive documentation:
 - **NLTK**: Natural language processing
 - **TF-IDF Vectorizer**: Feature extraction
 
-### Pipeline & Versioning
-- **DVC**: Data and model versioning
+### Versioning
 - **Git**: Code versioning
 
 ### Web & API
