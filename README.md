@@ -93,7 +93,7 @@ IMBD project/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/imdb-sentiment-analysis.git
+git clone https://github.com/nadir2609/film-review-predictor.git
 cd imdb-sentiment-analysis
 ```
 
