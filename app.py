@@ -8,7 +8,7 @@ import requests
 import json
 
 # API endpoint
-API_URL = "http://localhost:8000/predict"
+API_URL = "http://51.20.103.53:8000/predict"
 
 # Page configuration
 st.set_page_config(
@@ -72,7 +72,7 @@ with st.sidebar:
     
     # Check API health
     try:
-        response = requests.get("http://localhost:8000/health", timeout=2)
+        response = requests.get("http://51.20.103.53:8000/health", timeout=2)
         if response.status_code == 200:
             st.success("✅ API is running")
         else:
